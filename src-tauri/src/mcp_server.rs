@@ -234,8 +234,22 @@ pub async fn start_server(
             let mut cmd = Command::new(&server.config.command);
             cmd.args(&server.config.args);
 
+            // Resolve path templates in work_dir
             if let Some(ref work_dir) = server.config.work_dir {
-                cmd.current_dir(work_dir);
+                let resolved_work_dir = resolve_path_template(work_dir);
+                cmd.current_dir(&resolved_work_dir);
+            }
+
+            // Add environment variables
+            if let Some(ref docker_config) = server.config.docker {
+                for env_var in &docker_config.env_vars {
+                    if let Some((key, value)) = env_var.split_once('=') {
+                        let resolved_value = resolve_path_template(value);
+                        cmd.env(key, &resolved_value);
+                    } else {
+                        cmd.env(env_var, "");
+                    }
+                }
             }
 
             cmd.stdout(Stdio::piped())
