@@ -1,0 +1,58 @@
+# MCP Manager - Informações do Sistema [TEMPLATE]
+
+## 📋 Informações Gerais
+- **Data de Geração**: {{GENERATION_DATE}}
+- **Hostname**: {{HOSTNAME}}
+- **Usuário**: {{USERNAME}}
+- **Home Directory**: {{HOME_DIR}}
+
+## 🔧 Ambiente de Execução
+- **Sistema Operacional**: {{OS_NAME}}
+- **Versão do Kernel**: {{KERNEL_VERSION}}
+- **Arquitetura**: {{ARCHITECTURE}}
+- **Node.js Version**: {{NODE_VERSION}}
+- **NPM Version**: {{NPM_VERSION}}
+- **Rust Version**: {{RUST_VERSION}} (se aplicável)
+- **Cargo Version**: {{CARGO_VERSION}} (se aplicável)
+
+## 🌐 Rede e Conectividade
+- **Tailscale Status**: {{TAILSCALE_STATUS}}
+- **Tailscale IP**: {{TAILSCALE_IP}}
+- **IP Local**: {{LOCAL_IP}}
+- **Portas em Uso**: {{USED_PORTS}}
+
+## 🐳 Docker (se disponível)
+- **Docker Version**: {{DOCKER_VERSION}}
+- **Docker Status**: {{DOCKER_STATUS}}
+- **Containers MCP Ativos**: {{ACTIVE_MCP_CONTAINERS}}
+
+## 📦 Servidores MCP Configurados
+
+### Servidores Ativos
+{{ACTIVE_SERVERS_LIST}}
+
+### Configurações por Servidor
+{{SERVER_CONFIGS}}
+
+## 🗂️ Diretórios e Permissões
+- **Diretório de Projetos**: {{PROJECTS_DIR}}
+- **Permissão de Leitura**: {{READ_PERMISSIONS}}
+- **Permissão de Escrita**: {{WRITE_PERMISSIONS}}
+- **Volumes Docker Montados**: {{MOUNTED_VOLUMES}}
+
+## 🔌 Conexão com Open WebUI
+- **Open WebUI URL**: {{OPEN_WEBUI_URL}}
+- **Status da Conexão**: {{CONNECTION_STATUS}}
+- **MCPO Habilitado**: {{MCPO_ENABLED}}
+
+## ⚠️ Problemas Conhecidos
+{{KNOWN_ISSUES}}
+
+## 📝 Logs Recentes
+{{RECENT_LOGS}}
+
+## 🛠️ Diagnóstico e Troubleshooting
+{{DIAGNOSTIC_INFO}}
+
+---
+*Este arquivo foi gerado automaticamente pelo MCP Manager. Para atualizar as informações, execute: `npm run mcp-info`*

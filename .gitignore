@@ -1,59 +1,18 @@
 ```
-# Dependencies
-node_modules/
-
 # Build artifacts
-target/
 dist/
 build/
-
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-.venv/
-.ENV
-.python-version
-
-# Logs
+# Dependencies
+node_modules/
+# Logs and temp files
 *.log
-
-# Environment variables
+*.tmp
+*.swp
+# Environment
 .env
 .env.local
 .env.*
-
-# IDE
+# Editors
 .vscode/
 .idea/
-*.swp
-*.swo
-*.tmp
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Coverage
-coverage/
-htmlcov/
-.coverage
-
-# MyPy
-.mypy_cache/
-
-# Pytest
-.pytest_cache/
-
-# Rust/Cargo (for Tauri)
-Cargo.lock
-target/
-
-# Tauri specific
-src-tauri/target/
-src-tauri/Cargo.lock
 ```
