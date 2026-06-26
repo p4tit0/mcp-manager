@@ -12,23 +12,129 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const ROOT_DIR = path.join(__dirname, '..');
 
 // Função para executar comandos e capturar output
 function runCommand(cmd, fallback = 'N/A') {
   try {
-    return execSync(cmd, { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'ignore'] }).trim();
+    return execSync(cmd, { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'ignore'], cwd: ROOT_DIR }).trim();
   } catch (error) {
     return fallback;
   }
 }
 
+// Função para ler arquivo de forma segura
+function safeReadFile(filePath, fallback = '') {
+  try {
+    if (fs.existsSync(filePath)) {
+      return fs.readFileSync(filePath, 'utf-8').trim();
+    }
+    return fallback;
+  } catch (error) {
+    return fallback;
+  }
+}
+
+// Função para obter data formatada
+function getLastUpdated() {
+  const now = new Date();
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  return `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+}
+
+// Função para obter estrutura de arquivos
+function getFileStructure() {
+  const structure = `📁 mcp-manager/
+├── 📁 src/
+│   ├── 📁 components/
+│   │   └── 📄 Sidebar.tsx
+│   │
+│   ├── 📁 pages/
+│   │   ├── 📄 Dashboard.tsx
+│   │   ├── 📄 Logs.tsx
+│   │   └── 📄 Settings.tsx
+│   │
+│   ├── 📁 contexts/
+│   │   └── 📄 ThemeContext.tsx
+│   │
+│   ├── 📄 App.tsx
+│   └── 📄 App.css
+│
+├── 📁 src-tauri/
+│   ├── 📁 src/
+│   │   ├── 📄 main.rs
+│   │   ├── 📄 mcp_server.rs
+│   │   ├── 📄 tray.rs
+│   │   └── 📄 autostart.rs
+│   │
+│   ├── 📄 Cargo.toml
+│   ├── 📄 tauri.conf.json
+│   └── 📁 icons/
+│
+├── 📄 vite.config.ts
+├── 📄 package.json
+└── 📄 tsconfig.json`;
+  return structure;
+}
+
+// Função para obter lista de features
+function getFeaturesList() {
+  return `- **Dashboard:** Start/Stop/Restart/Remove MCP servers
+- **Logs:** Real-time viewing with auto-refresh
+- **Settings:** Themes, Autostart
+- **System Tray:** Show Dashboard / Quit / Left-click opens dashboard
+- Window minimizes to tray on close (doesn't exit)
+- DevTools enabled in release`;
+}
+
+// Função para obter lista de temas
+function getThemesList() {
+  return `- Light
+- Dark
+- System (auto)
+- Nord
+- Dracula
+- Monokai`;
+}
+
 // Função para obter informações do sistema
 function getSystemInfo() {
   const info = {
-    // Informações Gerais
+    // Informações do Projeto
+    LAST_UPDATED: getLastUpdated(),
+    DESCRIPTION: 'Gerenciador de servidores MCP com interface Tauri + React para integração com Open WebUI via Tailscale',
+    PROJECT_LOCATION: '~/Projects/mcp-manager',
+    FRAMEWORK: 'Tauri v2 + React + TypeScript',
+    CSS_FRAMEWORK: 'Tailwind CSS v4 (@tailwindcss/vite)',
+    APP_IDENTIFIER: 'com.birblabs.mcp-manager',
+    ICONS_PATH: 'src-tauri/icons/',
+    
+    FEATURES_LIST: getFeaturesList(),
+    THEMES_LIST: getThemesList(),
+    FILE_STRUCTURE: getFileStructure(),
+    
+    // Conteúdo dos arquivos de código
+    VITE_CONFIG: safeReadFile(path.join(ROOT_DIR, 'vite.config.ts')),
+    PACKAGE_JSON: safeReadFile(path.join(ROOT_DIR, 'package.json')),
+    SIDEBAR_TSX: safeReadFile(path.join(ROOT_DIR, 'src/components/Sidebar.tsx')),
+    DASHBOARD_TSX: safeReadFile(path.join(ROOT_DIR, 'src/pages/Dashboard.tsx')),
+    LOGS_TSX: safeReadFile(path.join(ROOT_DIR, 'src/pages/Logs.tsx')),
+    SETTINGS_TSX: safeReadFile(path.join(ROOT_DIR, 'src/pages/Settings.tsx')),
+    THEME_CONTEXT_TSX: safeReadFile(path.join(ROOT_DIR, 'src/contexts/ThemeContext.tsx')),
+    APP_TSX: safeReadFile(path.join(ROOT_DIR, 'src/App.tsx')),
+    APP_CSS: safeReadFile(path.join(ROOT_DIR, 'src/App.css')),
+    CARGO_TOML: safeReadFile(path.join(ROOT_DIR, 'src-tauri/Cargo.toml')),
+    TAURI_CONFIG: safeReadFile(path.join(ROOT_DIR, 'src-tauri/tauri.conf.json')),
+    LIB_RS: safeReadFile(path.join(ROOT_DIR, 'src-tauri/src/lib.rs')),
+    MAIN_RS: safeReadFile(path.join(ROOT_DIR, 'src-tauri/src/main.rs')),
+    MCP_SERVER_RS: safeReadFile(path.join(ROOT_DIR, 'src-tauri/src/mcp_server.rs')),
+    TRAY_RS: safeReadFile(path.join(ROOT_DIR, 'src-tauri/src/tray.rs')),
+    AUTOSTART_RS: safeReadFile(path.join(ROOT_DIR, 'src-tauri/src/autostart.rs')),
+    
+    // Informações Gerais do Sistema
     GENERATION_DATE: new Date().toLocaleString('pt-BR'),
     HOSTNAME: runCommand('hostname'),
-    USERNAME: runCommand('whoami'),
+    CURRENT_USER: runCommand('whoami'),
     HOME_DIR: process.env.HOME || runCommand('echo $HOME'),
     
     // Ambiente de Execução
@@ -38,36 +144,16 @@ function getSystemInfo() {
     NODE_VERSION: runCommand('node --version', 'Não instalado'),
     NPM_VERSION: runCommand('npm --version', 'Não instalado'),
     RUST_VERSION: runCommand('rustc --version', 'Não instalado').replace('rustc ', ''),
-    CARGO_VERSION: runCommand('cargo --version', 'Não instalado', 'Não instalado').replace('cargo ', ''),
+    CARGO_VERSION: runCommand('cargo --version', 'Não instalado').replace('cargo ', ''),
     
     // Rede e Conectividade
     TAILSCALE_STATUS: runCommand('systemctl is-active tailscaled 2>/dev/null || echo "Verificando..."', 'Não verificado'),
     TAILSCALE_IP: runCommand('tailscale ip 2>/dev/null | head -1', 'Não disponível'),
     LOCAL_IP: runCommand('hostname -I 2>/dev/null | awk \'{print $1}\'', 'Não disponível'),
-    USED_PORTS: runCommand('ss -tlnp 2>/dev/null | grep -E ":(300[0-9]|5037)" | awk \'{print $4}\' | sort -u | tr "\\n" ", " | sed "s/, $//" || echo "Nenhuma porta MCP"', 'Nenhuma porta detectada'),
     
     // Docker
     DOCKER_VERSION: runCommand('docker --version 2>/dev/null | cut -d" " -f3', 'Não instalado'),
-    DOCKER_STATUS: runCommand('systemctl is-active docker 2>/dev/null || (docker info >/dev/null 2>&1 && echo "active") || echo "inactive"', 'Não verificado'),
-    ACTIVE_MCP_CONTAINERS: runCommand('docker ps 2>/dev/null --filter "name=mcp" --format "{{.Names}}" | tr "\\n" ", " | sed "s/, $//" || echo "Nenhum container ativo"', 'Docker não disponível'),
-    
-    // Diretórios
-    PROJECTS_DIR: `${process.env.HOME || '/home/user'}/Projects`,
-    READ_PERMISSIONS: runCommand(`test -r ${process.env.HOME || '/home/user'}/Projects && echo "Sim" || echo "Não"`, 'Não verificado'),
-    WRITE_PERMISSIONS: runCommand(`test -w ${process.env.HOME || '/home/user'}/Projects && echo "Sim" || echo "Não"`, 'Não verificado'),
-    MOUNTED_VOLUMES: runCommand('docker ps 2>/dev/null --format "{{.Mounts}}" | grep -E "Projects|mnt" | head -5 | tr "\\n" "; " || echo "Nenhum volume montado"', 'Docker não disponível'),
-    
-    // Open WebUI
-    OPEN_WEBUI_URL: process.env.OPEN_WEBUI_URL || 'http://localhost:8080',
-    CONNECTION_STATUS: 'A verificar',
-    MCPO_ENABLED: 'Sim',
-    
-    // Placeholders para preenchimento manual/dinâmico
-    ACTIVE_SERVERS_LIST: '*Memory Server*\n*Sequential Thinking Server*\n*Git Server*',
-    SERVER_CONFIGS: 'Consulte o dashboard para configurações detalhadas de cada servidor.',
-    KNOWN_ISSUES: '- Filesystem Server: Erro de resolução de caminho $HOME\n- Shell Server: Requer permissões elevadas para alguns comandos',
-    RECENT_LOGS: 'Verifique logs em tempo real no dashboard do MCP Manager.',
-    DIAGNOSTIC_INFO: 'Execute `npm run mcp-diagnose` para diagnóstico detalhado.'
+    DOCKER_STATUS: runCommand('systemctl is-active docker 2>/dev/null || (docker info >/dev/null 2>&1 && echo "active") || echo "inactive"', 'Não verificado')
   };
   
   return info;
@@ -77,7 +163,11 @@ function getSystemInfo() {
 function replacePlaceholders(template, info) {
   let content = template;
   
-  for (const [key, value] of Object.entries(info)) {
+  // Ordenar chaves por tamanho (maiores primeiro) para evitar substituições parciais
+  const sortedKeys = Object.keys(info).sort((a, b) => b.length - a.length);
+  
+  for (const key of sortedKeys) {
+    const value = info[key];
     const placeholder = new RegExp(`{{${key}}}`, 'g');
     content = content.replace(placeholder, value);
   }
@@ -85,61 +175,9 @@ function replacePlaceholders(template, info) {
   return content;
 }
 
-// Função para extrair seções manuais do arquivo existente
-function extractManualSections(existingContent) {
-  const sections = {};
-  
-  // Extrair conteúdo entre marcadores específicos se existirem
-  const markers = [
-    'KNOWN_ISSUES',
-    'RECENT_LOGS', 
-    'DIAGNOSTIC_INFO',
-    'ACTIVE_SERVERS_LIST',
-    'SERVER_CONFIGS'
-  ];
-  
-  // Se o arquivo já tem conteúdo formatado, tentar preservar
-  if (existingContent.includes('## ⚠️ Problemas Conhecidos')) {
-    const issuesMatch = existingContent.match(/## ⚠️ Problemas Conhecidos\n([\s\S]*?)(?=##|\Z)/);
-    if (issuesMatch && issuesMatch[1].trim()) {
-      sections.KNOWN_ISSUES = issuesMatch[1].trim();
-    }
-  }
-  
-  if (existingContent.includes('## 📝 Logs Recentes')) {
-    const logsMatch = existingContent.match(/## 📝 Logs Recentes\n([\s\S]*?)(?=##|\Z)/);
-    if (logsMatch && logsMatch[1].trim()) {
-      sections.RECENT_LOGS = logsMatch[1].trim();
-    }
-  }
-  
-  if (existingContent.includes('## 🛠️ Diagnóstico')) {
-    const diagMatch = existingContent.match(/## 🛠️ Diagnóstico[\s\S]*?\n([\s\S]*?)(?=##|\Z)/);
-    if (diagMatch && diagMatch[1].trim()) {
-      sections.DIAGNOSTIC_INFO = diagMatch[1].trim();
-    }
-  }
-  
-  if (existingContent.includes('### Servidores Ativos')) {
-    const serversMatch = existingContent.match(/### Servidores Ativos\n([\s\S]*?)(?=###|\Z)/);
-    if (serversMatch && serversMatch[1].trim()) {
-      sections.ACTIVE_SERVERS_LIST = serversMatch[1].trim();
-    }
-  }
-  
-  if (existingContent.includes('### Configurações por Servidor')) {
-    const configMatch = existingContent.match(/### Configurações por Servidor\n([\s\S]*?)(?=##|\Z)/);
-    if (configMatch && configMatch[1].trim()) {
-      sections.SERVER_CONFIGS = configMatch[1].trim();
-    }
-  }
-  
-  return sections;
-}
-
 // Função principal
 async function main() {
-  console.log('🔍 Coletando informações do sistema...');
+  console.log('🔍 Coletando informações do sistema e do projeto...');
   
   const templatePath = path.join(__dirname, '..', 'MCP Manager - info.md [TEMPLATE]');
   const outputPath = path.join(__dirname, '..', 'MCP Manager - info.md');
@@ -151,20 +189,10 @@ async function main() {
   }
   
   // Ler template
-  let template = fs.readFileSync(templatePath, 'utf-8');
+  const template = fs.readFileSync(templatePath, 'utf-8');
   
   // Obter informações do sistema
-  let info = getSystemInfo();
-  
-  // Se o arquivo de saída já existe, extrair seções manuais para preservar
-  if (fs.existsSync(outputPath)) {
-    console.log('📄 Arquivo existente detectado, preservando conteúdo manual...');
-    const existingContent = fs.readFileSync(outputPath, 'utf-8');
-    const manualSections = extractManualSections(existingContent);
-    
-    // Sobrescrever apenas as seções que foram extraídas do arquivo existente
-    Object.assign(info, manualSections);
-  }
+  const info = getSystemInfo();
   
   // Substituir placeholders
   const content = replacePlaceholders(template, info);
@@ -173,14 +201,15 @@ async function main() {
   fs.writeFileSync(outputPath, content, 'utf-8');
   
   console.log('✅ Arquivo gerado/atualizado com sucesso:', outputPath);
-  console.log('\n📋 Resumo das informações:');
+  console.log('\\n📋 Resumo das informações:');
+  console.log(`   Última atualização: ${info.LAST_UPDATED}`);
   console.log(`   Hostname: ${info.HOSTNAME}`);
-  console.log(`   Usuário: ${info.USERNAME}`);
+  console.log(`   Usuário: ${info.CURRENT_USER}`);
   console.log(`   Node.js: ${info.NODE_VERSION}`);
   console.log(`   Rust: ${info.RUST_VERSION}`);
   console.log(`   Docker: ${info.DOCKER_VERSION || 'Não instalado'}`);
   console.log(`   Tailscale IP: ${info.TAILSCALE_IP}`);
-  console.log('\n📝 Para visualizar: cat "MCP Manager - info.md"');
+  console.log('\\n📝 Para visualizar: cat "MCP Manager - info.md"');
 }
 
 main().catch(console.error);
