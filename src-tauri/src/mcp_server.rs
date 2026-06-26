@@ -232,7 +232,12 @@ pub async fn start_server(
             Ok(format!("Container {} started", container_id))
         } else {
             let mut cmd = Command::new(&server.config.command);
-            cmd.args(&server.config.args);
+            
+            // Resolve path templates in args
+            let resolved_args: Vec<String> = server.config.args.iter()
+                .map(|arg| resolve_path_template(arg))
+                .collect();
+            cmd.args(&resolved_args);
 
             // Resolve path templates in work_dir
             if let Some(ref work_dir) = server.config.work_dir {
@@ -240,7 +245,7 @@ pub async fn start_server(
                 cmd.current_dir(&resolved_work_dir);
             }
 
-            // Add environment variables
+            // Add environment variables with path resolution
             if let Some(ref docker_config) = server.config.docker {
                 for env_var in &docker_config.env_vars {
                     if let Some((key, value)) = env_var.split_once('=') {
