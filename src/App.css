@@ -1,0 +1,227 @@
+@import "tailwindcss";
+
+/* ============================================================
+   TAILWIND v4 — Variant Dark
+   No Tailwind v4 estável, usa-se @variant (não @custom-variant)
+   ============================================================ */
+@variant dark (&:where(.dark, .dark *));
+
+/* ============================================================
+   Força navegadores a estilizar inputs/selects corretamente
+   no dark mode (resolve o "texto branco em fundo branco")
+   ============================================================ */
+.dark {
+  color-scheme: dark;
+}
+
+select,
+input,
+textarea,
+option {
+  color-scheme: inherit;
+}
+
+/* Remove estilos nativos do SO que sobrescrevem o Tailwind */
+select,
+input,
+textarea {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* ============================================================
+   PALETAS BASE (Nord, Dracula, Monokai)
+   ============================================================ */
+@theme {
+  /* Cores Nord */
+  --color-nord-0: #2E3440;
+  --color-nord-1: #3B4252;
+  --color-nord-2: #434C5E;
+  --color-nord-3: #4C566A;
+  --color-nord-4: #D8DEE9;
+  --color-nord-5: #E5E9F0;
+  --color-nord-6: #ECEFF4;
+
+  /* Cores Dracula */
+  --color-dracula-bg: #282A36;
+  --color-dracula-current: #44475A;
+  --color-dracula-fg: #F8F8F2;
+  --color-dracula-comment: #6272A4;
+  --color-dracula-cyan: #8BE9FD;
+  --color-dracula-green: #50FA7B;
+  --color-dracula-orange: #FFB86C;
+  --color-dracula-pink: #FF79C6;
+  --color-dracula-purple: #BD93F9;
+  --color-dracula-red: #FF5555;
+  --color-dracula-yellow: #F1FA8C;
+
+  /* Cores Monokai */
+  --color-monokai-bg: #272822;
+  --color-monokai-fg: #F8F8F2;
+  --color-monokai-comment: #75715E;
+  --color-monokai-cyan: #66D9EF;
+  --color-monokai-green: #A6E22E;
+  --color-monokai-orange: #FD971F;
+  --color-monokai-pink: #F92672;
+  --color-monokai-purple: #AE81FF;
+  --color-monokai-red: #F92672;
+  --color-monokai-yellow: #E6DB74;
+}
+
+/* ============================================================
+   TEMA NORD
+   Mapeia as cores Nord para as variáveis internas do Tailwind,
+   fazendo com que classes como bg-white, bg-gray-800,
+   text-blue-600 etc. assumam automaticamente a paleta Nord.
+   ============================================================ */
+.nord {
+  color-scheme: dark;
+
+  /* Fundos e textos base */
+  --color-white: #ECEFF4;       /* nord-6 */
+  --color-black: #2E3440;       /* nord-0 */
+
+  /* Escala de cinzas (do mais claro ao mais escuro) */
+  --color-gray-50: #E5E9F0;     /* nord-4 */
+  --color-gray-100: #D8DEE9;    /* nord-4 */
+  --color-gray-200: #4C566A;    /* nord-3 (bordas) */
+  --color-gray-300: #434C5E;    /* nord-2 */
+  --color-gray-400: #3B4252;    /* nord-1 */
+  --color-gray-500: #4C566A;    /* nord-3 (textos secundários) */
+  --color-gray-600: #434C5E;    /* nord-2 */
+  --color-gray-700: #3B4252;    /* nord-1 */
+  --color-gray-800: #2E3440;    /* nord-0 (fundos escuros) */
+  --color-gray-900: #2E3440;    /* nord-0 */
+
+  /* Azuis */
+  --color-blue-100: #88C0D0;    /* nord-8 */
+  --color-blue-300: #81A1C1;    /* nord-9 */
+  --color-blue-400: #5E81AC;    /* nord-10 */
+  --color-blue-500: #5E81AC;
+  --color-blue-600: #5E81AC;
+  --color-blue-700: #5E81AC;
+  --color-blue-900: #3B4252;
+
+  /* Verdes */
+  --color-green-100: #A3BE8C;   /* nord-14 */
+  --color-green-400: #A3BE8C;
+  --color-green-600: #A3BE8C;
+  --color-green-700: #A3BE8C;
+  --color-green-900: #3B4252;
+
+  /* Vermelhos */
+  --color-red-100: #BF616A;     /* nord-11 */
+  --color-red-400: #BF616A;
+  --color-red-600: #BF616A;
+  --color-red-700: #BF616A;
+  --color-red-900: #3B4252;
+
+  /* Amarelos */
+  --color-yellow-100: #EBCB8B;  /* nord-13 */
+  --color-yellow-400: #EBCB8B;
+  --color-yellow-600: #EBCB8B;
+}
+
+/* ============================================================
+   TEMA DRACULA
+   ============================================================ */
+.dracula {
+  color-scheme: dark;
+
+  --color-white: #F8F8F2;
+  --color-black: #282A36;
+
+  --color-gray-50: #F8F8F2;
+  --color-gray-100: #F8F8F2;
+  --color-gray-200: #6272A4;    /* comment */
+  --color-gray-300: #44475A;    /* current */
+  --color-gray-400: #44475A;
+  --color-gray-500: #6272A4;
+  --color-gray-600: #44475A;
+  --color-gray-700: #44475A;
+  --color-gray-800: #282A36;    /* bg */
+  --color-gray-900: #282A36;
+
+  --color-blue-100: #8BE9FD;    /* cyan */
+  --color-blue-300: #8BE9FD;
+  --color-blue-400: #BD93F9;    /* purple */
+  --color-blue-500: #BD93F9;
+  --color-blue-600: #BD93F9;
+  --color-blue-700: #BD93F9;
+  --color-blue-900: #44475A;
+
+  --color-green-100: #50FA7B;
+  --color-green-400: #50FA7B;
+  --color-green-600: #50FA7B;
+  --color-green-700: #50FA7B;
+  --color-green-900: #44475A;
+
+  --color-red-100: #FF5555;
+  --color-red-400: #FF5555;
+  --color-red-600: #FF5555;
+  --color-red-700: #FF5555;
+  --color-red-900: #44475A;
+
+  --color-yellow-100: #F1FA8C;
+  --color-yellow-400: #F1FA8C;
+  --color-yellow-600: #F1FA8C;
+}
+
+/* ============================================================
+   TEMA MONOKAI
+   ============================================================ */
+.monokai {
+  color-scheme: dark;
+
+  --color-white: #F8F8F2;
+  --color-black: #272822;
+
+  --color-gray-50: #F8F8F2;
+  --color-gray-100: #F8F8F2;
+  --color-gray-200: #75715E;    /* comment */
+  --color-gray-300: #49483E;
+  --color-gray-400: #3E3D32;
+  --color-gray-500: #75715E;
+  --color-gray-600: #49483E;
+  --color-gray-700: #3E3D32;
+  --color-gray-800: #272822;    /* bg */
+  --color-gray-900: #272822;
+
+  --color-blue-100: #66D9EF;    /* cyan */
+  --color-blue-300: #66D9EF;
+  --color-blue-400: #AE81FF;    /* purple */
+  --color-blue-500: #AE81FF;
+  --color-blue-600: #AE81FF;
+  --color-blue-700: #AE81FF;
+  --color-blue-900: #3E3D32;
+
+  --color-green-100: #A6E22E;
+  --color-green-400: #A6E22E;
+  --color-green-600: #A6E22E;
+  --color-green-700: #A6E22E;
+  --color-green-900: #3E3D32;
+
+  --color-red-100: #F92672;     /* pink/red */
+  --color-red-400: #F92672;
+  --color-red-600: #F92672;
+  --color-red-700: #F92672;
+  --color-red-900: #3E3D32;
+
+  --color-yellow-100: #E6DB74;
+  --color-yellow-400: #FD971F;  /* orange */
+  --color-yellow-600: #FD971F;
+}
+
+/* ============================================================
+   ESTILOS BASE
+   ============================================================ */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
