@@ -18,6 +18,143 @@ const SRC_DIR = path.join(ROOT_DIR, 'src');
 const TAURI_DIR = path.join(ROOT_DIR, 'src-tauri');
 const DATA_DIR = path.join(SRC_DIR, 'data');
 
+/**
+ * ====================================================================================
+ * PATHS TO IGNORE
+ * ====================================================================================
+ */
+
+const NODE_MODULES_DIR = path.join(ROOT_DIR, 'node_modules');
+const PUBLIC_DIR = path.join(ROOT_DIR, 'public');
+const SCRIPTS_DIR = path.join(ROOT_DIR, 'scripts');
+const DIST_DIR = path.join(ROOT_DIR, 'dist');
+const GIT_DIR = path.join(ROOT_DIR, '.git');
+const VSCODE_DIR = path.join(ROOT_DIR, '.vscode');
+
+const GITIGNORE_FILE = path.join(ROOT_DIR, '.gitignore');
+const PRETTIER_FILE = path.join(ROOT_DIR, '.prettierrc');
+const BUILD_LOG_FILE = path.join(ROOT_DIR, 'build_log.txt');
+const INDEX_FILE = path.join(ROOT_DIR, 'index.html');
+const INFO_FILE = path.join(ROOT_DIR, 'MCP Manager - info.md');
+const PACKAGE_LOCK_FILE = path.join(ROOT_DIR, 'package-lock.json');
+const README_FILE = path.join(ROOT_DIR, 'README.md');
+
+const TAURI_DIST = path.join(TAURI_DIR, 'target');
+const CARGO_LOCK_FILE = path.join(TAURI_DIR, 'Cargo.lock');
+const TAURI_GITIGNORE_FILE = path.join(TAURI_DIR, '.gitignore');
+
+const PATH_BLACKLIST = [
+  SCRIPTS_DIR,
+  NODE_MODULES_DIR,
+  PUBLIC_DIR,
+  DIST_DIR,
+  GIT_DIR,
+  VSCODE_DIR,
+  GITIGNORE_FILE,
+  PRETTIER_FILE,
+  BUILD_LOG_FILE,
+  INDEX_FILE,
+  INFO_FILE,
+  PACKAGE_LOCK_FILE,
+  README_FILE,
+  TAURI_DIST,
+  CARGO_LOCK_FILE,
+  TAURI_GITIGNORE_FILE
+];
+
+/**
+ * ====================================================================================
+ * SOURCE CODE CONFIGURATION
+ * ====================================================================================
+ */
+
+const SOURCE_CONFIG = [
+  {
+    name: "Project Configuration",
+    dir: ROOT_DIR,
+    whitelist_enable: true,
+    blacklist_enable: true,
+    whitelist: [],
+    blacklist: [
+      GITIGNORE_FILE,
+      PRETTIER_FILE,
+      BUILD_LOG_FILE,
+      INDEX_FILE,
+      INFO_FILE,
+      PACKAGE_LOCK_FILE,
+      README_FILE
+    ],
+    children: []
+  },
+  {
+    name: "Tauri Configuration",
+    dir: TAURI_DIR,
+    whitelist_enable: false,
+    blacklist_enable: false,
+    whitelist: [],
+    blacklist: [
+      CARGO_LOCK_FILE,
+      TAURI_GITIGNORE_FILE
+    ],
+    children: []
+  },
+  {
+    name: "Frontend",
+    dir: SRC_DIR,
+    whitelist_enable: false,
+    blacklist_enable: false,
+    whitelist: [],
+    blacklist: [],
+    children: [
+      {
+        name: "Components",
+        dir: path.join(SRC_DIR, "components"),
+        whitelist_enable: false,
+        blacklist_enable: false,
+        whitelist: [],
+        blacklist: [],
+        children: []
+      },
+      {
+        name: "Contexts",
+        dir: path.join(SRC_DIR, "contexts"),
+        whitelist_enable: false,
+        blacklist_enable: false,
+        whitelist: [],
+        blacklist: [],
+        children: []
+      },
+      {
+        name: "Data",
+        dir: path.join(SRC_DIR, "data"),
+        whitelist_enable: false,
+        blacklist_enable: false,
+        whitelist: [],
+        blacklist: [],
+        children: []
+      },
+      {
+        name: "Pages",
+        dir: path.join(SRC_DIR, "pages"),
+        whitelist_enable: false,
+        blacklist_enable: false,
+        whitelist: [],
+        blacklist: [],
+        children: []
+      }
+    ]
+  },
+  {
+    name: "Backend",
+    dir: path.join(TAURI_DIR, "src"),
+    whitelist_enable: false,
+    blacklist_enable: false,
+    whitelist: [],
+    blacklist: [],
+    children: []
+  }
+]
+
 // Função para executar comandos e capturar output
 function runCommand(cmd, fallback = 'N/A') {
   try {
@@ -48,6 +185,7 @@ function getLastUpdated() {
 
 // Função para gerar árvore de diretórios recursivamente
 function generateFileTree(dir, prefix = '', isLast = true, depth = 0) {
+  
   if (depth > 10) return ''; // Limite de profundidade
   
   const items = [];
@@ -57,15 +195,15 @@ function generateFileTree(dir, prefix = '', isLast = true, depth = 0) {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
     
     // Separar diretórios e arquivos, ordenando alfabeticamente
-    const directories = entries.filter(e => e.isDirectory()).sort((a, b) => a.name.localeCompare(b.name));
-    const files = entries.filter(e => e.isFile() && !e.name.startsWith('.')).sort((a, b) => a.name.localeCompare(b.name));
+    const directories = entries.filter(e => e.isDirectory() && !PATH_BLACKLIST.includes(path.join(dir, e.name))).sort((a, b) => a.name.localeCompare(b.name));
+    const files = entries.filter(e => e.isFile() && !e.name.startsWith('.') && !PATH_BLACKLIST.includes(path.join(dir, e.name))).sort((a, b) => a.name.localeCompare(b.name));
     
     const allItems = [...directories, ...files];
     
     allItems.forEach((entry, index) => {
       const isLastItem = index === allItems.length - 1;
       const connector = isLastItem ? '└───' : '├───';
-      const extension = isLastItem ? '    ' : '│   ';
+      const extension = isLastItem ? '     ' : '│    ';
       
       let icon = '📁 ';
       if (entry.isFile()) {
@@ -73,7 +211,7 @@ function generateFileTree(dir, prefix = '', isLast = true, depth = 0) {
         icon = getIconForExtension(ext);
       }
       
-      items.push(`${prefix}${connector} ${icon}${entry.name}`);
+      items.push(`${prefix}${connector} ${icon}${entry.name}${entry.isDirectory() ? "/" : ""}`);
       
       // Se for diretório, recurse
       if (entry.isDirectory() && !entry.name.startsWith('.')) {
@@ -110,31 +248,8 @@ function getIconForExtension(ext) {
 }
 
 // Função para obter estrutura de arquivos dinâmica
-function getFileStructure() {
-  const rootName = 'mcp-manager/';
-  const srcTree = generateFileTree(SRC_DIR, '├─── ', false);
-  const tauriTree = generateFileTree(TAURI_DIR, '└─── ', true);
-  
-  // Adicionar arquivos da raiz
-  const rootFiles = [];
-  try {
-    const rootEntries = fs.readdirSync(ROOT_DIR, { withFileTypes: true });
-    const files = rootEntries
-      .filter(e => e.isFile() && !e.name.startsWith('.') && 
-                   (e.name.endsWith('.json') || e.name.endsWith('.ts') || 
-                    e.name.endsWith('.tsx') || e.name.endsWith('.css') ||
-                    e.name.endsWith('.md')))
-      .sort((a, b) => a.name.localeCompare(b.name));
-    
-    files.forEach(file => {
-      const icon = getIconForExtension(path.extname(file.name));
-      rootFiles.push(`├─── ${icon}${file.name}`);
-    });
-  } catch (error) {
-    // Ignorar
-  }
-  
-  return `📁 ${rootName}\n${srcTree}\n${tauriTree}\n${rootFiles.join('\n')}`;
+function getFileStructure() { 
+  return '📁 mcp-manager/\n' + generateFileTree(ROOT_DIR);
 }
 
 // Função para carregar dados de JSON
@@ -201,81 +316,6 @@ function getTemplatesList() {
   return '- No templates available';
 }
 
-// Função para coletar todos os arquivos de código fonte
-function collectSourceFiles() {
-  const sourceFiles = {};
-  
-  // Arquivos da raiz
-  const rootFiles = ['vite.config.ts', 'package.json', 'tsconfig.json', 'tsconfig.node.json'];
-  rootFiles.forEach(file => {
-    const filePath = path.join(ROOT_DIR, file);
-    if (fs.existsSync(filePath)) {
-      sourceFiles[`root_${file.replace(/\./g, '_')}`] = {
-        path: file,
-        content: safeReadFile(filePath),
-        language: getLanguageFromExtension(path.extname(file))
-      };
-    }
-  });
-  
-  // Arquivos frontend (src/)
-  collectFilesRecursively(SRC_DIR, 'frontend_', sourceFiles);
-  
-  // Arquivos Tauri (src-tauri/)
-  const tauriConfigFiles = ['Cargo.toml', 'tauri.conf.json'];
-  tauriConfigFiles.forEach(file => {
-    const filePath = path.join(TAURI_DIR, file);
-    if (fs.existsSync(filePath)) {
-      sourceFiles[`tauri_${file.replace(/\./g, '_')}`] = {
-        path: `src-tauri/${file}`,
-        content: safeReadFile(filePath),
-        language: getLanguageFromExtension(path.extname(file))
-      };
-    }
-  });
-  
-  // Arquivos Rust (src-tauri/src/)
-  collectFilesRecursively(path.join(TAURI_DIR, 'src'), 'backend_', sourceFiles, ['.rs']);
-  
-  return sourceFiles;
-}
-
-// Função para coletar arquivos recursivamente
-function collectFilesRecursively(dir, prefix, sourceFiles, extensions = null) {
-  try {
-    const entries = fs.readdirSync(dir, { withFileTypes: true });
-    
-    entries.forEach(entry => {
-      if (entry.name.startsWith('.')) return;
-      
-      const fullPath = path.join(dir, entry.path || path.join(dir, entry.name));
-      
-      if (entry.isDirectory()) {
-        collectFilesRecursively(fullPath, prefix, sourceFiles, extensions);
-      } else if (entry.isFile()) {
-        const ext = path.extname(entry.name);
-        
-        // Filtrar por extensões se especificado
-        if (extensions && !extensions.includes(ext)) return;
-        
-        // Ignorar certos tipos de arquivo
-        if (['.d.ts'].includes(ext)) return;
-        
-        const relativePath = path.relative(ROOT_DIR, fullPath);
-        const key = `${prefix}${relativePath.replace(/[\/\\\.]/g, '_')}`;
-        
-        sourceFiles[key] = {
-          path: relativePath,
-          content: safeReadFile(fullPath),
-          language: getLanguageFromExtension(ext)
-        };
-      }
-    });
-  } catch (error) {
-    // Ignorar erros
-  }
-}
-
 // Função para determinar linguagem baseada na extensão
 function getLanguageFromExtension(ext) {
   const languages = {
@@ -293,72 +333,9 @@ function getLanguageFromExtension(ext) {
   return languages[ext] || 'text';
 }
 
-// Função para gerar seção de código fonte
-function generateSourceCodeSection(sourceFiles) {
-  let section = '';
+function generateSourceCodeSection(prefix = '', isLast = true, depth = 0) {
+  if (depth > 6) return ''; // Limite de profundidade
   
-  // Agrupar por categoria
-  const rootFiles = Object.entries(sourceFiles).filter(([key]) => key.startsWith('root_'));
-  const frontendFiles = Object.entries(sourceFiles).filter(([key]) => key.startsWith('frontend_'));
-  const tauriFiles = Object.entries(sourceFiles).filter(([key]) => key.startsWith('tauri_'));
-  const backendFiles = Object.entries(sourceFiles).filter(([key]) => key.startsWith('backend_'));
-  
-  // Project Settings
-  if (rootFiles.length > 0) {
-    section += `\n### Project Settings\n\n`;
-    rootFiles.forEach(([key, file]) => {
-      const fileName = file.path.split('/').pop();
-      section += `#### ${fileName}\n\n`;
-      section += `\`\`\`${file.language}\n${file.content}\n\`\`\`\n\n`;
-    });
-  }
-  
-  // Frontend
-  if (frontendFiles.length > 0) {
-    section += `\n---\n\n### Frontend (src/)\n\n`;
-    
-    // Agrupar por subdiretório
-    const frontendGroups = {};
-    frontendFiles.forEach(([key, file]) => {
-      const parts = file.path.split('/');
-      const dir = parts.length > 2 ? parts[1] : 'root';
-      if (!frontendGroups[dir]) frontendGroups[dir] = [];
-      frontendGroups[dir].push(file);
-    });
-    
-    Object.entries(frontendGroups).forEach(([dir, files]) => {
-      if (dir !== 'root') {
-        section += `#### ${capitalizeFirst(dir)}\n\n`;
-      }
-      files.forEach(file => {
-        const fileName = file.path.split('/').pop();
-        section += `##### ${fileName}\n\n`;
-        section += `\`\`\`${file.language}\n${file.content}\n\`\`\`\n\n`;
-      });
-    });
-  }
-  
-  // Tauri Config
-  if (tauriFiles.length > 0) {
-    section += `\n---\n\n### Tauri Configuration (src-tauri/)\n\n`;
-    tauriFiles.forEach(([key, file]) => {
-      const fileName = file.path.split('/').pop();
-      section += `#### ${fileName}\n\n`;
-      section += `\`\`\`${file.language}\n${file.content}\n\`\`\`\n\n`;
-    });
-  }
-  
-  // Backend (Rust)
-  if (backendFiles.length > 0) {
-    section += `\n---\n\n### Backend (src-tauri/src/)\n\n`;
-    backendFiles.forEach(([key, file]) => {
-      const fileName = file.path.split('/').pop();
-      section += `#### ${fileName}\n\n`;
-      section += `\`\`\`${file.language}\n${file.content}\n\`\`\`\n\n`;
-    });
-  }
-  
-  return section;
 }
 
 // Função auxiliar para capitalizar primeira letra
@@ -368,9 +345,6 @@ function capitalizeFirst(str) {
 
 // Função para obter informações do sistema
 function getSystemInfo() {
-  const sourceFiles = collectSourceFiles();
-  const sourceCodeSection = generateSourceCodeSection(sourceFiles);
-  
   const info = {
     // Informações do Projeto
     LAST_UPDATED: getLastUpdated(),
@@ -385,7 +359,7 @@ function getSystemInfo() {
     THEMES_LIST: getThemesList(),
     TEMPLATES_LIST: getTemplatesList(),
     FILE_STRUCTURE: getFileStructure(),
-    SOURCE_CODE: sourceCodeSection,
+    SOURCE_CODE: generateSourceCodeSection(),
     
     // Informações Gerais do Sistema
     GENERATION_DATE: new Date().toLocaleString('pt-BR'),
@@ -438,7 +412,7 @@ async function main() {
   console.log('📋 Carregando features, temas e templates dos JSONs...');
   console.log('📝 Coletando códigos fonte automaticamente...');
   
-  const templatePath = path.join(__dirname, '..', 'MCP Manager - info.md [TEMPLATE]');
+  const templatePath = path.join(__dirname, '..', 'scripts', 'MCP Manager - info.md [TEMPLATE]');
   const outputPath = path.join(__dirname, '..', 'MCP Manager - info.md');
   
   // Verificar se o template existe

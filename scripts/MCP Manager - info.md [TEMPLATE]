@@ -1,0 +1,84 @@
+# MCP Manager Application
+
+> **Last Updated:** {{LAST_UPDATED}}
+> {{DESCRIPTION}}
+
+---
+
+## Table of Contents
+
+1. [Project Details](#project-details)
+    1. [Features](#features)
+    2. [Available Themes](#available-themes)
+    3. [Templates](#templates)
+2. [File Structure](#file-structure)
+3. [Source Code](#source-code)
+
+---
+## System Information
+
+### Environment
+
+- **Hostname**: {{HOSTNAME}}
+- **User**: {{CURRENT_USER}}
+- **Home Directory**: {{HOME_DIR}}
+- **Generation Date**: {{GENERATION_DATE}}
+
+### System Details
+
+- **Operating System**: {{OS_NAME}}
+- **Kernel Version**: {{KERNEL_VERSION}}
+- **Architecture**: {{ARCHITECTURE}}
+- **Node.js Version**: {{NODE_VERSION}}
+- **NPM Version**: {{NPM_VERSION}}
+- **Rust Version**: {{RUST_VERSION}}
+- **Cargo Version**: {{CARGO_VERSION}}
+
+### Network
+
+- **Local IP**: {{LOCAL_IP}}
+- **Tailscale Status**: {{TAILSCALE_STATUS}}
+- **Tailscale IP**: {{TAILSCALE_IP}}
+
+### Docker
+
+- **Docker Version**: {{DOCKER_VERSION}}
+- **Docker Status**: {{DOCKER_STATUS}}
+
+---
+
+## Project Details
+
+| Property   | Value                               |
+|------------|-------------------------------------|
+| Location   | `{{PROJECT_LOCATION}}`              |
+| Framework  | {{FRAMEWORK}}                       |
+| CSS        | {{CSS_FRAMEWORK}}                   |
+| Identifier | {{APP_IDENTIFIER}}                  |
+| Icons      | `{{ICONS_PATH}}`                    |
+
+### Features
+
+{{FEATURES_LIST}}
+
+### Available Themes
+
+{{THEMES_LIST}}
+
+### Templates
+
+{{TEMPLATES_LIST}}
+
+---
+
+## File Structure
+
+```text
+{{FILE_STRUCTURE}}
+```
+
+---
+
+## Source Code
+
+{{SOURCE_CODE}}
