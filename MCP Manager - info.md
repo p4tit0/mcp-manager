@@ -2504,10 +2504,10 @@ pub fn should_start_minimized() -> bool {
 
 ### Environment
 
-- **Hostname**: c-6a3ec714-01471659-241cc90ad788
+- **Hostname**: c-6a3ef8ef-01471659-130e4bf63191
 - **User**: root
 - **Home Directory**: /root
-- **Generation Date**: 26/06/2026, 21:27:48
+- **Generation Date**: 26/06/2026, 22:21:53
 
 ### System Details
 
@@ -2521,7 +2521,7 @@ pub fn should_start_minimized() -> bool {
 
 ### Network
 
-- **Local IP**: 21.0.8.52
+- **Local IP**: 21.0.3.148
 - **Tailscale Status**: Verificando...
 - **Tailscale IP**: 
 
