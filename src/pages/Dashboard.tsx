@@ -75,9 +75,10 @@ export default function Dashboard() {
             name: 'Filesystem Server',
             description: 'Access local files and directories (isolated via Docker, read-only)',
             command: 'npx',
-            args: '["-y", "@modelcontextprotocol/server-filesystem", "$HOME/Projects"]',
+            args: '["-y", "@modelcontextprotocol/server-filesystem"]',
             port: 3002,
             workDir: '',
+            envVars: 'ALLOWED_DIRS=$HOME/Projects',
             useDocker: false,
         },
         {
