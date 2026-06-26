@@ -1,0 +1,37 @@
+{
+  "templates": [
+    {
+      "id": "default",
+      "name": "Default Template",
+      "description": "Standard MCP Manager layout",
+      "layout": {
+        "sidebar": true,
+        "header": true,
+        "footer": false
+      },
+      "components": ["Sidebar", "Dashboard", "Logs", "Settings"]
+    },
+    {
+      "id": "compact",
+      "name": "Compact Template",
+      "description": "Minimalist layout for focused work",
+      "layout": {
+        "sidebar": false,
+        "header": true,
+        "footer": false
+      },
+      "components": ["Dashboard", "Logs"]
+    },
+    {
+      "id": "full",
+      "name": "Full Template",
+      "description": "Complete layout with all features",
+      "layout": {
+        "sidebar": true,
+        "header": true,
+        "footer": true
+      },
+      "components": ["Sidebar", "Dashboard", "Logs", "Settings", "Header", "Footer"]
+    }
+  ]
+}
