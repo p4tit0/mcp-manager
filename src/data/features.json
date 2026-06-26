@@ -1,0 +1,28 @@
+{
+  "features": [
+    {
+      "name": "Dashboard",
+      "description": "Start/Stop/Restart/Remove MCP servers"
+    },
+    {
+      "name": "Logs",
+      "description": "Real-time viewing with auto-refresh"
+    },
+    {
+      "name": "Settings",
+      "description": "Themes, Autostart"
+    },
+    {
+      "name": "System Tray",
+      "description": "Show Dashboard / Quit / Left-click opens dashboard"
+    },
+    {
+      "name": "Window Management",
+      "description": "Window minimizes to tray on close (doesn't exit)"
+    },
+    {
+      "name": "DevTools",
+      "description": "Enabled in release"
+    }
+  ]
+}

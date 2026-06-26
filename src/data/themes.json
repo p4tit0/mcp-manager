@@ -1,0 +1,34 @@
+{
+  "themes": [
+    {
+      "id": "light",
+      "name": "Light",
+      "description": "Classic light theme"
+    },
+    {
+      "id": "dark",
+      "name": "Dark",
+      "description": "Classic dark theme"
+    },
+    {
+      "id": "system",
+      "name": "System",
+      "description": "Automatically follows system preference"
+    },
+    {
+      "id": "nord",
+      "name": "Nord",
+      "description": "Arctic-inspired color palette"
+    },
+    {
+      "id": "dracula",
+      "name": "Dracula",
+      "description": "Dark theme with vibrant colors"
+    },
+    {
+      "id": "monokai",
+      "name": "Monokai",
+      "description": "Popular developer theme"
+    }
+  ]
+}
