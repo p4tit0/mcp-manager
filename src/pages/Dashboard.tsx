@@ -58,6 +58,98 @@ export default function Dashboard() {
         dockerNetwork: 'host',
     });
 
+    // MCP Server Templates
+    const mcpTemplates = [
+        {
+            id: 'memory',
+            name: 'Memory Server',
+            description: 'Persistent memory storage for AI context',
+            command: 'npx',
+            args: '["-y", "@modelcontextprotocol/server-memory"]',
+            port: 3001,
+            workDir: '',
+            useDocker: false,
+        },
+        {
+            id: 'filesystem',
+            name: 'Filesystem Server',
+            description: 'Access local files and directories',
+            command: 'npx',
+            args: '["-y", "@modelcontextprotocol/server-filesystem", "/home/user/Projects"]',
+            port: 3002,
+            workDir: '/home/user/Projects',
+            useDocker: false,
+        },
+        {
+            id: 'shell',
+            name: 'Shell Server',
+            description: 'Execute shell commands securely',
+            command: 'npx',
+            args: '["-y", "@modelcontextprotocol/server-shell"]',
+            port: 3003,
+            workDir: '',
+            useDocker: false,
+        },
+        {
+            id: 'adb',
+            name: 'ADB Server',
+            description: 'Android Debug Bridge integration',
+            command: 'npx',
+            args: '["-y", "@modelcontextprotocol/server-adb"]',
+            port: 3004,
+            workDir: '',
+            useDocker: false,
+        },
+        {
+            id: 'sequential-thinking',
+            name: 'Sequential Thinking Server',
+            description: 'Chain of thought reasoning',
+            command: 'npx',
+            args: '["-y", "@modelcontextprotocol/server-sequential-thinking"]',
+            port: 3005,
+            workDir: '',
+            useDocker: false,
+        },
+        {
+            id: 'git',
+            name: 'Git Server',
+            description: 'Git repository operations',
+            command: 'npx',
+            args: '["-y", "@modelcontextprotocol/server-git"]',
+            port: 3006,
+            workDir: '/home/user/Projects',
+            useDocker: false,
+        },
+        {
+            id: 'playwright',
+            name: 'Playwright Server',
+            description: 'Browser automation and testing',
+            command: 'npx',
+            args: '["-y", "@modelcontextprotocol/server-playwright"]',
+            port: 3007,
+            workDir: '',
+            useDocker: true,
+            dockerImage: 'mcr.microsoft.com/playwright:v1.40.0-jammy',
+        },
+    ];
+
+    const applyTemplate = (template: typeof mcpTemplates[0]) => {
+        setFormData({
+            id: template.id,
+            name: template.name,
+            command: template.command,
+            args: template.args,
+            port: template.port,
+            workDir: template.workDir || '',
+            useDocker: template.useDocker || false,
+            dockerImage: template.dockerImage || 'node:20-slim',
+            dockerVolumes: '',
+            dockerEnvVars: '',
+            dockerNetwork: 'host',
+        });
+        setShowModal(true);
+    };
+
     useEffect(() => {
         loadServers();
         const interval = setInterval(loadServers, 2000);
@@ -244,6 +336,34 @@ export default function Dashboard() {
                     <Plus size={20} />
                     Add Server
                 </button>
+            </div>
+
+            {/* MCP Templates Section */}
+            <div className="mb-8">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Quick Start Templates</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {mcpTemplates.map((template) => (
+                        <button
+                            key={template.id}
+                            onClick={() => applyTemplate(template)}
+                            className="flex flex-col items-start p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-all text-left group"
+                        >
+                            <div className="flex items-center gap-2 mb-2">
+                                <Container size={18} className="text-blue-600 dark:text-blue-400" />
+                                <h3 className="font-medium text-gray-900 dark:text-white">{template.name}</h3>
+                            </div>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">{template.description}</p>
+                            <div className="mt-3 flex items-center gap-2 text-xs">
+                                {template.useDocker ? (
+                                    <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded">Docker</span>
+                                ) : (
+                                    <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded">Native</span>
+                                )}
+                                <span className="text-gray-400 dark:text-gray-500">Port: {template.port}</span>
+                            </div>
+                        </button>
+                    ))}
+                </div>
             </div>
 
             {servers.length === 0 ? (

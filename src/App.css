@@ -4,7 +4,7 @@
    TAILWIND v4 — Variant Dark
    No Tailwind v4 estável, usa-se @variant (não @custom-variant)
    ============================================================ */
-@variant dark (&:where(.dark, .dark *));
+@variant dark (&:where(.dark, .dark *, .nord, .nord *, .dracula, .dracula *, .monokai, .monokai *));
 
 /* ============================================================
    Força navegadores a estilizar inputs/selects corretamente
@@ -83,7 +83,7 @@ textarea {
   --color-black: #2E3440;       /* nord-0 */
 
   /* Escala de cinzas (do mais claro ao mais escuro) */
-  --color-gray-50: #E5E9F0;     /* nord-4 */
+  --color-gray-50: #E5E9F0;     /* nord-5 */
   --color-gray-100: #D8DEE9;    /* nord-4 */
   --color-gray-200: #4C566A;    /* nord-3 (bordas) */
   --color-gray-300: #434C5E;    /* nord-2 */
@@ -95,32 +95,70 @@ textarea {
   --color-gray-900: #2E3440;    /* nord-0 */
 
   /* Azuis */
+  --color-blue-50: #88C0D0;     /* nord-8 */
   --color-blue-100: #88C0D0;    /* nord-8 */
+  --color-blue-200: #81A1C1;    /* nord-9 */
   --color-blue-300: #81A1C1;    /* nord-9 */
   --color-blue-400: #5E81AC;    /* nord-10 */
   --color-blue-500: #5E81AC;
   --color-blue-600: #5E81AC;
   --color-blue-700: #5E81AC;
+  --color-blue-800: #4C566A;
   --color-blue-900: #3B4252;
 
   /* Verdes */
-  --color-green-100: #A3BE8C;   /* nord-14 */
+  --color-green-50: #A3BE8C;   /* nord-14 */
+  --color-green-100: #A3BE8C;
+  --color-green-200: #A3BE8C;
+  --color-green-300: #A3BE8C;
   --color-green-400: #A3BE8C;
+  --color-green-500: #A3BE8C;
   --color-green-600: #A3BE8C;
   --color-green-700: #A3BE8C;
+  --color-green-800: #4C566A;
   --color-green-900: #3B4252;
 
   /* Vermelhos */
-  --color-red-100: #BF616A;     /* nord-11 */
+  --color-red-50: #BF616A;     /* nord-11 */
+  --color-red-100: #BF616A;
+  --color-red-200: #BF616A;
+  --color-red-300: #BF616A;
   --color-red-400: #BF616A;
+  --color-red-500: #BF616A;
   --color-red-600: #BF616A;
   --color-red-700: #BF616A;
+  --color-red-800: #4C566A;
   --color-red-900: #3B4252;
 
   /* Amarelos */
-  --color-yellow-100: #EBCB8B;  /* nord-13 */
+  --color-yellow-50: #EBCB8B;  /* nord-13 */
+  --color-yellow-100: #EBCB8B;
+  --color-yellow-200: #EBCB8B;
+  --color-yellow-300: #EBCB8B;
   --color-yellow-400: #EBCB8B;
+  --color-yellow-500: #EBCB8B;
   --color-yellow-600: #EBCB8B;
+  --color-yellow-700: #EBCB8B;
+  
+  /* Laranjas */
+  --color-orange-50: #D08770;  /* nord-12 */
+  --color-orange-100: #D08770;
+  --color-orange-200: #D08770;
+  --color-orange-300: #D08770;
+  --color-orange-400: #D08770;
+  --color-orange-500: #D08770;
+  --color-orange-600: #D08770;
+  --color-orange-700: #D08770;
+  
+  /* Roxos */
+  --color-purple-50: #B48EAD;  /* nord-15 */
+  --color-purple-100: #B48EAD;
+  --color-purple-200: #B48EAD;
+  --color-purple-300: #B48EAD;
+  --color-purple-400: #B48EAD;
+  --color-purple-500: #B48EAD;
+  --color-purple-600: #B48EAD;
+  --color-purple-700: #B48EAD;
 }
 
 /* ============================================================
@@ -143,29 +181,74 @@ textarea {
   --color-gray-800: #282A36;    /* bg */
   --color-gray-900: #282A36;
 
-  --color-blue-100: #8BE9FD;    /* cyan */
-  --color-blue-300: #8BE9FD;
-  --color-blue-400: #BD93F9;    /* purple */
+  --color-blue-50: #8BE9FD;    /* cyan */
+  --color-blue-100: #8BE9FD;
+  --color-blue-200: #8BE9FD;
+  --color-blue-300: #BD93F9;    /* purple */
+  --color-blue-400: #BD93F9;
   --color-blue-500: #BD93F9;
   --color-blue-600: #BD93F9;
   --color-blue-700: #BD93F9;
+  --color-blue-800: #6272A4;
   --color-blue-900: #44475A;
 
+  --color-green-50: #50FA7B;
   --color-green-100: #50FA7B;
+  --color-green-200: #50FA7B;
+  --color-green-300: #50FA7B;
   --color-green-400: #50FA7B;
+  --color-green-500: #50FA7B;
   --color-green-600: #50FA7B;
   --color-green-700: #50FA7B;
+  --color-green-800: #6272A4;
   --color-green-900: #44475A;
 
+  --color-red-50: #FF5555;
   --color-red-100: #FF5555;
+  --color-red-200: #FF5555;
+  --color-red-300: #FF5555;
   --color-red-400: #FF5555;
+  --color-red-500: #FF5555;
   --color-red-600: #FF5555;
   --color-red-700: #FF5555;
+  --color-red-800: #6272A4;
   --color-red-900: #44475A;
 
+  --color-yellow-50: #F1FA8C;
   --color-yellow-100: #F1FA8C;
+  --color-yellow-200: #F1FA8C;
+  --color-yellow-300: #F1FA8C;
   --color-yellow-400: #F1FA8C;
+  --color-yellow-500: #F1FA8C;
   --color-yellow-600: #F1FA8C;
+  --color-yellow-700: #F1FA8C;
+  
+  --color-orange-50: #FFB86C;
+  --color-orange-100: #FFB86C;
+  --color-orange-200: #FFB86C;
+  --color-orange-300: #FFB86C;
+  --color-orange-400: #FFB86C;
+  --color-orange-500: #FFB86C;
+  --color-orange-600: #FFB86C;
+  --color-orange-700: #FFB86C;
+  
+  --color-purple-50: #BD93F9;
+  --color-purple-100: #BD93F9;
+  --color-purple-200: #BD93F9;
+  --color-purple-300: #BD93F9;
+  --color-purple-400: #BD93F9;
+  --color-purple-500: #BD93F9;
+  --color-purple-600: #BD93F9;
+  --color-purple-700: #BD93F9;
+  
+  --color-pink-50: #FF79C6;
+  --color-pink-100: #FF79C6;
+  --color-pink-200: #FF79C6;
+  --color-pink-300: #FF79C6;
+  --color-pink-400: #FF79C6;
+  --color-pink-500: #FF79C6;
+  --color-pink-600: #FF79C6;
+  --color-pink-700: #FF79C6;
 }
 
 /* ============================================================
@@ -188,29 +271,74 @@ textarea {
   --color-gray-800: #272822;    /* bg */
   --color-gray-900: #272822;
 
-  --color-blue-100: #66D9EF;    /* cyan */
-  --color-blue-300: #66D9EF;
-  --color-blue-400: #AE81FF;    /* purple */
+  --color-blue-50: #66D9EF;    /* cyan */
+  --color-blue-100: #66D9EF;
+  --color-blue-200: #66D9EF;
+  --color-blue-300: #AE81FF;    /* purple */
+  --color-blue-400: #AE81FF;
   --color-blue-500: #AE81FF;
   --color-blue-600: #AE81FF;
   --color-blue-700: #AE81FF;
+  --color-blue-800: #75715E;
   --color-blue-900: #3E3D32;
 
+  --color-green-50: #A6E22E;
   --color-green-100: #A6E22E;
+  --color-green-200: #A6E22E;
+  --color-green-300: #A6E22E;
   --color-green-400: #A6E22E;
+  --color-green-500: #A6E22E;
   --color-green-600: #A6E22E;
   --color-green-700: #A6E22E;
+  --color-green-800: #75715E;
   --color-green-900: #3E3D32;
 
-  --color-red-100: #F92672;     /* pink/red */
+  --color-red-50: #F92672;     /* pink/red */
+  --color-red-100: #F92672;
+  --color-red-200: #F92672;
+  --color-red-300: #F92672;
   --color-red-400: #F92672;
+  --color-red-500: #F92672;
   --color-red-600: #F92672;
   --color-red-700: #F92672;
+  --color-red-800: #75715E;
   --color-red-900: #3E3D32;
 
+  --color-yellow-50: #E6DB74;
   --color-yellow-100: #E6DB74;
+  --color-yellow-200: #E6DB74;
+  --color-yellow-300: #E6DB74;
   --color-yellow-400: #FD971F;  /* orange */
+  --color-yellow-500: #FD971F;
   --color-yellow-600: #FD971F;
+  --color-yellow-700: #FD971F;
+  
+  --color-orange-50: #FD971F;
+  --color-orange-100: #FD971F;
+  --color-orange-200: #FD971F;
+  --color-orange-300: #FD971F;
+  --color-orange-400: #FD971F;
+  --color-orange-500: #FD971F;
+  --color-orange-600: #FD971F;
+  --color-orange-700: #FD971F;
+  
+  --color-purple-50: #AE81FF;
+  --color-purple-100: #AE81FF;
+  --color-purple-200: #AE81FF;
+  --color-purple-300: #AE81FF;
+  --color-purple-400: #AE81FF;
+  --color-purple-500: #AE81FF;
+  --color-purple-600: #AE81FF;
+  --color-purple-700: #AE81FF;
+  
+  --color-pink-50: #F92672;
+  --color-pink-100: #F92672;
+  --color-pink-200: #F92672;
+  --color-pink-300: #F92672;
+  --color-pink-400: #F92672;
+  --color-pink-500: #F92672;
+  --color-pink-600: #F92672;
+  --color-pink-700: #F92672;
 }
 
 /* ============================================================
