@@ -19,11 +19,11 @@
 
 | Property   | Value                               |
 |------------|-------------------------------------|
-| Location   | `~/Projects/mcp-manager`              |
-| Framework  | Tauri v2 + React + TypeScript                       |
-| CSS        | Tailwind CSS v4 (@tailwindcss/vite)                   |
-| Identifier | com.birblabs.mcp-manager                  |
-| Icons      | `src-tauri/icons/`                    |
+| Location   | `~/Projects/mcp-manager`            |
+| Framework  | Tauri v2 + React + TypeScript       |
+| CSS        | Tailwind CSS v4 (@tailwindcss/vite) |
+| Identifier | `com.birblabs.mcp-manager`          |
+| Icons      | `src-tauri/icons/`                  |
 
 ### Features
 
