@@ -7,6 +7,7 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 use tauri::{State, Manager};
 use crate::AppState;
+use std::env;
 
 // ============================================================
 // PERSISTÊNCIA EM DISCO
@@ -46,6 +47,21 @@ pub fn load_servers(app: &tauri::AppHandle) -> HashMap<String, McpServer> {
         }
     }
     map
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+
+/// Obtém o caminho home do usuário atual de forma dinâmica
+fn get_home_dir() -> String {
+    env::var("HOME").unwrap_or_else(|_| "/home/user".to_string())
+}
+
+/// Substitui placeholders de caminho no template
+fn resolve_path_template(template: &str) -> String {
+    let home = get_home_dir();
+    template.replace("/home/user", &home).replace("$HOME", &home)
 }
 
 // ============================================================
@@ -158,8 +174,10 @@ pub async fn start_server(
             cmd.args(["--name", &format!("mcp-{}", server.config.id)]);
             cmd.args(["-p", &format!("{}:{}", server.config.port, server.config.port)]);
 
+            // Resolve path templates in volumes (replace /home/user with actual home)
             for volume in &docker_config.volumes {
-                cmd.args(["-v", volume]);
+                let resolved_volume = resolve_path_template(volume);
+                cmd.args(["-v", &resolved_volume]);
             }
             for env_var in &docker_config.env_vars {
                 cmd.args(["-e", env_var]);
