@@ -79,69 +79,69 @@ textarea {
   color-scheme: dark;
 
   /* Fundos e textos base */
-  --color-white: #ECEFF4;       /* nord-6 */
-  --color-black: #2E3440;       /* nord-0 */
+  --color-white: #ECEFF4;       /* nord-6 - texto principal */
+  --color-black: #2E3440;       /* nord-0 - fundo mais escuro */
 
   /* Escala de cinzas (do mais claro ao mais escuro) */
-  --color-gray-50: #E5E9F0;     /* nord-5 */
-  --color-gray-100: #D8DEE9;    /* nord-4 */
-  --color-gray-200: #4C566A;    /* nord-3 (bordas) */
-  --color-gray-300: #434C5E;    /* nord-2 */
-  --color-gray-400: #3B4252;    /* nord-1 */
-  --color-gray-500: #4C566A;    /* nord-3 (textos secundários) */
-  --color-gray-600: #434C5E;    /* nord-2 */
-  --color-gray-700: #3B4252;    /* nord-1 */
-  --color-gray-800: #2E3440;    /* nord-0 (fundos escuros) */
-  --color-gray-900: #2E3440;    /* nord-0 */
+  --color-gray-50: #ECEFF4;     /* nord-6 - texto principal */
+  --color-gray-100: #E5E9F0;    /* nord-5 - texto secundário claro */
+  --color-gray-200: #D8DEE9;    /* nord-4 - ícones e bordas claras */
+  --color-gray-300: #CDD3DE;    /* bordas médias */
+  --color-gray-400: #B8C0CC;    /* placeholders */
+  --color-gray-500: #A3AEBF;    /* texto desabilitado */
+  --color-gray-600: #4C566A;    /* nord-3 - fundos secundários */
+  --color-gray-700: #434C5E;    /* nord-2 - fundos de cards */
+  --color-gray-800: #3B4252;    /* nord-1 - fundos primários */
+  --color-gray-900: #2E3440;    /* nord-0 - fundo da página */
 
-  /* Azuis */
+  /* Azuis - mais vibrantes para melhor visibilidade */
   --color-blue-50: #88C0D0;     /* nord-8 */
-  --color-blue-100: #88C0D0;    /* nord-8 */
+  --color-blue-100: #88C0D0;
   --color-blue-200: #81A1C1;    /* nord-9 */
-  --color-blue-300: #81A1C1;    /* nord-9 */
+  --color-blue-300: #81A1C1;
   --color-blue-400: #5E81AC;    /* nord-10 */
   --color-blue-500: #5E81AC;
-  --color-blue-600: #5E81AC;
-  --color-blue-700: #5E81AC;
+  --color-blue-600: #81A1C1;
+  --color-blue-700: #88C0D0;
   --color-blue-800: #4C566A;
   --color-blue-900: #3B4252;
 
-  /* Verdes */
-  --color-green-50: #A3BE8C;   /* nord-14 */
+  /* Verdes - mais saturados */
+  --color-green-50: #A3BE8C;    /* nord-14 */
   --color-green-100: #A3BE8C;
   --color-green-200: #A3BE8C;
   --color-green-300: #A3BE8C;
   --color-green-400: #A3BE8C;
   --color-green-500: #A3BE8C;
-  --color-green-600: #A3BE8C;
-  --color-green-700: #A3BE8C;
+  --color-green-600: #8FBCBB;   /* nord-7 - teal */
+  --color-green-700: #8FBCBB;
   --color-green-800: #4C566A;
   --color-green-900: #3B4252;
 
-  /* Vermelhos */
-  --color-red-50: #BF616A;     /* nord-11 */
+  /* Vermelhos - mais claros */
+  --color-red-50: #BF616A;      /* nord-11 */
   --color-red-100: #BF616A;
   --color-red-200: #BF616A;
   --color-red-300: #BF616A;
   --color-red-400: #BF616A;
   --color-red-500: #BF616A;
-  --color-red-600: #BF616A;
-  --color-red-700: #BF616A;
+  --color-red-600: #D08770;     /* nord-12 - laranja avermelhado */
+  --color-red-700: #D08770;
   --color-red-800: #4C566A;
   --color-red-900: #3B4252;
 
-  /* Amarelos */
-  --color-yellow-50: #EBCB8B;  /* nord-13 */
+  /* Amarelos - mais brilhantes */
+  --color-yellow-50: #EBCB8B;   /* nord-13 */
   --color-yellow-100: #EBCB8B;
   --color-yellow-200: #EBCB8B;
   --color-yellow-300: #EBCB8B;
   --color-yellow-400: #EBCB8B;
   --color-yellow-500: #EBCB8B;
-  --color-yellow-600: #EBCB8B;
-  --color-yellow-700: #EBCB8B;
+  --color-yellow-600: #D08770;
+  --color-yellow-700: #D08770;
   
   /* Laranjas */
-  --color-orange-50: #D08770;  /* nord-12 */
+  --color-orange-50: #D08770;   /* nord-12 */
   --color-orange-100: #D08770;
   --color-orange-200: #D08770;
   --color-orange-300: #D08770;
@@ -150,15 +150,15 @@ textarea {
   --color-orange-600: #D08770;
   --color-orange-700: #D08770;
   
-  /* Roxos */
-  --color-purple-50: #B48EAD;  /* nord-15 */
+  /* Roxos - mais vibrantes */
+  --color-purple-50: #B48EAD;   /* nord-15 */
   --color-purple-100: #B48EAD;
   --color-purple-200: #B48EAD;
   --color-purple-300: #B48EAD;
   --color-purple-400: #B48EAD;
   --color-purple-500: #B48EAD;
-  --color-purple-600: #B48EAD;
-  --color-purple-700: #B48EAD;
+  --color-purple-600: #5E81AC;
+  --color-purple-700: #81A1C1;
 }
 
 /* ============================================================
@@ -167,21 +167,21 @@ textarea {
 .dracula {
   color-scheme: dark;
 
-  --color-white: #F8F8F2;
-  --color-black: #282A36;
+  --color-white: #F8F8F2;       /* texto principal */
+  --color-black: #282A36;       /* fundo mais escuro */
 
-  --color-gray-50: #F8F8F2;
-  --color-gray-100: #F8F8F2;
-  --color-gray-200: #6272A4;    /* comment */
-  --color-gray-300: #44475A;    /* current */
-  --color-gray-400: #44475A;
-  --color-gray-500: #6272A4;
-  --color-gray-600: #44475A;
-  --color-gray-700: #44475A;
-  --color-gray-800: #282A36;    /* bg */
-  --color-gray-900: #282A36;
+  --color-gray-50: #F8F8F2;     /* texto principal */
+  --color-gray-100: #F1FA8C;    /* texto secundário claro */
+  --color-gray-200: #E5E5E5;    /* ícones e bordas claras */
+  --color-gray-300: #C9D6E8;    /* bordas médias */
+  --color-gray-400: #A8B8D0;    /* placeholders */
+  --color-gray-500: #8A9AB8;    /* texto desabilitado */
+  --color-gray-600: #6272A4;    /* comment - fundos secundários */
+  --color-gray-700: #44475A;    /* current - fundos de cards */
+  --color-gray-800: #282A36;    /* bg - fundos primários */
+  --color-gray-900: #282A36;    /* bg - fundo da página */
 
-  --color-blue-50: #8BE9FD;    /* cyan */
+  --color-blue-50: #8BE9FD;     /* cyan - mais brilhante */
   --color-blue-100: #8BE9FD;
   --color-blue-200: #8BE9FD;
   --color-blue-300: #BD93F9;    /* purple */
@@ -192,7 +192,7 @@ textarea {
   --color-blue-800: #6272A4;
   --color-blue-900: #44475A;
 
-  --color-green-50: #50FA7B;
+  --color-green-50: #50FA7B;    /* verde neon */
   --color-green-100: #50FA7B;
   --color-green-200: #50FA7B;
   --color-green-300: #50FA7B;
@@ -203,7 +203,7 @@ textarea {
   --color-green-800: #6272A4;
   --color-green-900: #44475A;
 
-  --color-red-50: #FF5555;
+  --color-red-50: #FF5555;      /* vermelho vibrante */
   --color-red-100: #FF5555;
   --color-red-200: #FF5555;
   --color-red-300: #FF5555;
@@ -214,7 +214,7 @@ textarea {
   --color-red-800: #6272A4;
   --color-red-900: #44475A;
 
-  --color-yellow-50: #F1FA8C;
+  --color-yellow-50: #F1FA8C;   /* amarelo claro */
   --color-yellow-100: #F1FA8C;
   --color-yellow-200: #F1FA8C;
   --color-yellow-300: #F1FA8C;
@@ -223,7 +223,7 @@ textarea {
   --color-yellow-600: #F1FA8C;
   --color-yellow-700: #F1FA8C;
   
-  --color-orange-50: #FFB86C;
+  --color-orange-50: #FFB86C;   /* laranja suave */
   --color-orange-100: #FFB86C;
   --color-orange-200: #FFB86C;
   --color-orange-300: #FFB86C;
@@ -232,7 +232,7 @@ textarea {
   --color-orange-600: #FFB86C;
   --color-orange-700: #FFB86C;
   
-  --color-purple-50: #BD93F9;
+  --color-purple-50: #BD93F9;   /* roxo vibrante */
   --color-purple-100: #BD93F9;
   --color-purple-200: #BD93F9;
   --color-purple-300: #BD93F9;
@@ -241,7 +241,7 @@ textarea {
   --color-purple-600: #BD93F9;
   --color-purple-700: #BD93F9;
   
-  --color-pink-50: #FF79C6;
+  --color-pink-50: #FF79C6;     /* rosa vibrante */
   --color-pink-100: #FF79C6;
   --color-pink-200: #FF79C6;
   --color-pink-300: #FF79C6;
@@ -257,21 +257,21 @@ textarea {
 .monokai {
   color-scheme: dark;
 
-  --color-white: #F8F8F2;
-  --color-black: #272822;
+  --color-white: #F8F8F2;       /* texto principal */
+  --color-black: #272822;       /* fundo mais escuro */
 
-  --color-gray-50: #F8F8F2;
-  --color-gray-100: #F8F8F2;
-  --color-gray-200: #75715E;    /* comment */
-  --color-gray-300: #49483E;
-  --color-gray-400: #3E3D32;
-  --color-gray-500: #75715E;
-  --color-gray-600: #49483E;
-  --color-gray-700: #3E3D32;
-  --color-gray-800: #272822;    /* bg */
-  --color-gray-900: #272822;
+  --color-gray-50: #F8F8F2;     /* texto principal */
+  --color-gray-100: #F1F1E9;    /* texto secundário claro */
+  --color-gray-200: #E8E8E3;    /* ícones e bordas claras */
+  --color-gray-300: #D0D0CB;    /* bordas médias */
+  --color-gray-400: #B8B8B0;    /* placeholders */
+  --color-gray-500: #A0A098;    /* texto desabilitado */
+  --color-gray-600: #75715E;    /* comment - fundos secundários */
+  --color-gray-700: #49483E;    /* current - fundos de cards */
+  --color-gray-800: #3E3D32;    /* bg escuro - fundos primários */
+  --color-gray-900: #272822;    /* bg - fundo da página */
 
-  --color-blue-50: #66D9EF;    /* cyan */
+  --color-blue-50: #66D9EF;     /* cyan vibrante */
   --color-blue-100: #66D9EF;
   --color-blue-200: #66D9EF;
   --color-blue-300: #AE81FF;    /* purple */
@@ -282,7 +282,7 @@ textarea {
   --color-blue-800: #75715E;
   --color-blue-900: #3E3D32;
 
-  --color-green-50: #A6E22E;
+  --color-green-50: #A6E22E;    /* verde lima vibrante */
   --color-green-100: #A6E22E;
   --color-green-200: #A6E22E;
   --color-green-300: #A6E22E;
@@ -293,7 +293,7 @@ textarea {
   --color-green-800: #75715E;
   --color-green-900: #3E3D32;
 
-  --color-red-50: #F92672;     /* pink/red */
+  --color-red-50: #F92672;      /* rosa/vermelho vibrante */
   --color-red-100: #F92672;
   --color-red-200: #F92672;
   --color-red-300: #F92672;
@@ -304,7 +304,7 @@ textarea {
   --color-red-800: #75715E;
   --color-red-900: #3E3D32;
 
-  --color-yellow-50: #E6DB74;
+  --color-yellow-50: #E6DB74;   /* amarelo claro */
   --color-yellow-100: #E6DB74;
   --color-yellow-200: #E6DB74;
   --color-yellow-300: #E6DB74;
@@ -313,7 +313,7 @@ textarea {
   --color-yellow-600: #FD971F;
   --color-yellow-700: #FD971F;
   
-  --color-orange-50: #FD971F;
+  --color-orange-50: #FD971F;   /* laranja vibrante */
   --color-orange-100: #FD971F;
   --color-orange-200: #FD971F;
   --color-orange-300: #FD971F;
@@ -322,7 +322,7 @@ textarea {
   --color-orange-600: #FD971F;
   --color-orange-700: #FD971F;
   
-  --color-purple-50: #AE81FF;
+  --color-purple-50: #AE81FF;   /* roxo vibrante */
   --color-purple-100: #AE81FF;
   --color-purple-200: #AE81FF;
   --color-purple-300: #AE81FF;
@@ -331,7 +331,7 @@ textarea {
   --color-purple-600: #AE81FF;
   --color-purple-700: #AE81FF;
   
-  --color-pink-50: #F92672;
+  --color-pink-50: #F92672;     /* rosa vibrante */
   --color-pink-100: #F92672;
   --color-pink-200: #F92672;
   --color-pink-300: #F92672;
