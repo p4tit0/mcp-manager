@@ -1,6 +1,6 @@
 # MCP Manager Application
 
-> **Last Updated:** June 27, 2026
+> **Last Updated:** June 26, 2026
 > Gerenciador de servidores MCP com interface Tauri + React para integração com Open WebUI via Tailscale
 
 ---
@@ -19,31 +19,31 @@
 
 ### Environment
 
-- **Hostname**: c-6a3f11b9-01471659-a604765c04b5
-- **User**: root
-- **Home Directory**: /root
-- **Generation Date**: 27/06/2026, 00:10:31
+- **Hostname**: nitro-5
+- **User**: p4tit0
+- **Home Directory**: /home/p4tit0
+- **Generation Date**: 26/06/2026, 21:13:26
 
 ### System Details
 
 - **Operating System**: Linux
-- **Kernel Version**: 4.19.91-c8dfc93.al7.x86_64
+- **Kernel Version**: 7.0.9-200.nobara.fc43.x86_64
 - **Architecture**: x86_64
-- **Node.js Version**: v20.19.5
+- **Node.js Version**: v20.20.2
 - **NPM Version**: 10.8.2
-- **Rust Version**: Não instalado
-- **Cargo Version**: Não instalado
+- **Rust Version**: 1.96.0 (ac68faa20 2026-05-25)
+- **Cargo Version**: 1.96.0 (30a34c682 2026-05-25)
 
 ### Network
 
-- **Local IP**: 21.0.9.74
-- **Tailscale Status**: Verificando...
-- **Tailscale IP**: 
+- **Local IP**: 192.168.1.22
+- **Tailscale Status**: active
+- **Tailscale IP**: 100.117.11.103
 
 ### Docker
 
-- **Docker Version**: 
-- **Docker Status**: inactive
+- **Docker Version**: 29.6.0,
+- **Docker Status**: active
 
 ---
 
@@ -109,6 +109,12 @@
 ├─── 📁 src-tauri/
 │    ├─── 📁 capabilities/
 │    │    └─── 📋 default.json
+│    ├─── 📁 gen/
+│    │    └─── 📁 schemas/
+│    │         ├─── 📋 acl-manifests.json
+│    │         ├─── 📋 capabilities.json
+│    │         ├─── 📋 desktop-schema.json
+│    │         └─── 📋 linux-schema.json
 │    ├─── 📁 icons/
 │    │    ├─── 🖼️ 128x128.png
 │    │    ├─── 🖼️ 128x128@2x.png
