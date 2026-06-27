@@ -333,9 +333,140 @@ function getLanguageFromExtension(ext) {
   return languages[ext] || 'text';
 }
 
-function generateSourceCodeSection(prefix = '', isLast = true, depth = 0) {
-  if (depth > 6) return ''; // Limite de profundidade
+// Função para verificar se um arquivo deve ser incluído baseado na config
+function shouldIncludeFile(filePath, config) {
+  const normalizedPath = path.normalize(filePath);
   
+  // Se whitelist_enable for true, apenas arquivos na whitelist são incluídos
+  if (config.whitelist_enable) {
+    if (config.whitelist.length > 0) {
+      return config.whitelist.some(w => normalizedPath.includes(w));
+    }
+  }
+  
+  // Se blacklist_enable for true, arquivos na blacklist são excluídos
+  if (config.blacklist_enable && config.blacklist.length > 0) {
+    if (config.blacklist.some(b => normalizedPath === b || normalizedPath.includes(b))) {
+      return false;
+    }
+  }
+  
+  return true;
+}
+
+// Função para coletar arquivos de um diretório baseado na config
+function collectFilesFromConfig(config, depth = 0) {
+  if (depth > 6) return [];
+  
+  const files = [];
+  const dir = config.dir;
+  
+  if (!fs.existsSync(dir)) {
+    return files;
+  }
+  
+  try {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    
+    for (const entry of entries) {
+      if (entry.name.startsWith('.')) continue;
+      
+      const fullPath = path.join(dir, entry.name);
+      
+      if (entry.isDirectory()) {
+        // Verificar se há children configs para este diretório
+        const childConfig = config.children?.find(c => c.dir === fullPath);
+        if (childConfig) {
+          files.push(...collectFilesFromConfig(childConfig, depth + 1));
+        } else if (!config.blacklist_enable || !config.blacklist.some(b => fullPath.includes(b))) {
+          // Se não tem config específica, recurse se não estiver na blacklist
+          files.push(...collectFilesFromDirectory(fullPath, config, depth + 1));
+        }
+      } else if (entry.isFile()) {
+        if (shouldIncludeFile(fullPath, config)) {
+          files.push(fullPath);
+        }
+      }
+    }
+  } catch (error) {
+    // Ignorar erros de permissão
+  }
+  
+  return files;
+}
+
+// Função auxiliar para coletar arquivos de um diretório
+function collectFilesFromDirectory(dir, config, depth = 0) {
+  if (depth > 6) return [];
+  
+  const files = [];
+  
+  if (!fs.existsSync(dir)) {
+    return files;
+  }
+  
+  try {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    
+    for (const entry of entries) {
+      if (entry.name.startsWith('.')) continue;
+      
+      const fullPath = path.join(dir, entry.name);
+      
+      if (entry.isDirectory()) {
+        files.push(...collectFilesFromDirectory(fullPath, config, depth + 1));
+      } else if (entry.isFile()) {
+        if (shouldIncludeFile(fullPath, config)) {
+          files.push(fullPath);
+        }
+      }
+    }
+  } catch (error) {
+    // Ignorar erros de permissão
+  }
+  
+  return files;
+}
+
+// Função para gerar conteúdo do Source Code baseado na SOURCE_CONFIG
+function generateSourceCodeSection() {
+  const sections = [];
+  
+  for (const config of SOURCE_CONFIG) {
+    const sectionTitle = config.name;
+    const files = collectFilesFromConfig(config);
+    
+    if (files.length === 0) continue;
+    
+    // Ordenar arquivos por caminho
+    files.sort((a, b) => a.localeCompare(b));
+    
+    const fileSections = [];
+    
+    for (const filePath of files) {
+      const relativePath = path.relative(ROOT_DIR, filePath);
+      const ext = path.extname(filePath);
+      const language = getLanguageFromExtension(ext);
+      
+      // Ler conteúdo do arquivo
+      const content = safeReadFile(filePath);
+      if (!content) continue;
+      
+      fileSections.push(`### \`${relativePath}\`
+
+\`\`\`${language}
+${content}
+\`\`\``);
+    }
+    
+    if (fileSections.length > 0) {
+      sections.push(`### ${sectionTitle}
+
+${fileSections.join('\n\n---\n\n')}`);
+    }
+  }
+  
+  return sections.join('\n\n---\n\n');
 }
 
 // Função auxiliar para capitalizar primeira letra
