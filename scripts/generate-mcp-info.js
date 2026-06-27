@@ -354,10 +354,8 @@ function shouldIncludeFile(filePath, config) {
   return true;
 }
 
-// Função para coletar arquivos de um diretório baseado na config
-function collectFilesFromConfig(config, depth = 0) {
-  if (depth > 6) return [];
-  
+// Função para coletar arquivos de um diretório baseado na config (apenas 1 nível de profundidade)
+function collectFilesFromConfig(config) {
   const files = [];
   const dir = config.dir;
   
@@ -377,44 +375,10 @@ function collectFilesFromConfig(config, depth = 0) {
         // Verificar se há children configs para este diretório
         const childConfig = config.children?.find(c => c.dir === fullPath);
         if (childConfig) {
-          files.push(...collectFilesFromConfig(childConfig, depth + 1));
-        } else if (!config.blacklist_enable || !config.blacklist.some(b => fullPath.includes(b))) {
-          // Se não tem config específica, recurse se não estiver na blacklist
-          files.push(...collectFilesFromDirectory(fullPath, config, depth + 1));
+          // Processar apenas os arquivos deste child (sem recursão adicional)
+          files.push(...collectFilesFromConfig(childConfig));
         }
-      } else if (entry.isFile()) {
-        if (shouldIncludeFile(fullPath, config)) {
-          files.push(fullPath);
-        }
-      }
-    }
-  } catch (error) {
-    // Ignorar erros de permissão
-  }
-  
-  return files;
-}
-
-// Função auxiliar para coletar arquivos de um diretório
-function collectFilesFromDirectory(dir, config, depth = 0) {
-  if (depth > 6) return [];
-  
-  const files = [];
-  
-  if (!fs.existsSync(dir)) {
-    return files;
-  }
-  
-  try {
-    const entries = fs.readdirSync(dir, { withFileTypes: true });
-    
-    for (const entry of entries) {
-      if (entry.name.startsWith('.')) continue;
-      
-      const fullPath = path.join(dir, entry.name);
-      
-      if (entry.isDirectory()) {
-        files.push(...collectFilesFromDirectory(fullPath, config, depth + 1));
+        // Se não tem config específica, ignora o diretório (não recurse)
       } else if (entry.isFile()) {
         if (shouldIncludeFile(fullPath, config)) {
           files.push(fullPath);
