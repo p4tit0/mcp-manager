@@ -431,22 +431,50 @@ function collectFilesFromDirectory(dir, config, depth = 0) {
 // Função para gerar conteúdo do Source Code baseado na SOURCE_CONFIG
 function generateSourceCodeSection() {
   const sections = [];
+  const MAX_FILES_PER_SECTION = 50; // Limite para evitar estouro de memória
+  const MAX_FILE_SIZE = 50 * 1024; // 50KB max por arquivo
+  
+  console.log('📝 Iniciando coleta de source code...');
   
   for (const config of SOURCE_CONFIG) {
     const sectionTitle = config.name;
+    console.log(`  📁 Processando seção: ${sectionTitle}`);
+    
     const files = collectFilesFromConfig(config);
     
-    if (files.length === 0) continue;
+    if (files.length === 0) {
+      console.log(`    ⚠️  Nenhum arquivo encontrado`);
+      continue;
+    }
+    
+    console.log(`    ✓ Encontrados ${files.length} arquivos`);
     
     // Ordenar arquivos por caminho
     files.sort((a, b) => a.localeCompare(b));
     
+    // Limitar número de arquivos por seção
+    const limitedFiles = files.slice(0, MAX_FILES_PER_SECTION);
+    if (files.length > MAX_FILES_PER_SECTION) {
+      console.log(`    ⚠️  Limitado para ${MAX_FILES_PER_SECTION} arquivos (total: ${files.length})`);
+    }
+    
     const fileSections = [];
     
-    for (const filePath of files) {
+    for (const filePath of limitedFiles) {
       const relativePath = path.relative(ROOT_DIR, filePath);
       const ext = path.extname(filePath);
       const language = getLanguageFromExtension(ext);
+      
+      // Verificar tamanho do arquivo antes de ler
+      try {
+        const stats = fs.statSync(filePath);
+        if (stats.size > MAX_FILE_SIZE) {
+          console.log(`    ⏭️  Pulando arquivo grande (${(stats.size / 1024).toFixed(1)}KB): ${relativePath}`);
+          continue;
+        }
+      } catch (error) {
+        continue;
+      }
       
       // Ler conteúdo do arquivo
       const content = safeReadFile(filePath);
@@ -460,12 +488,16 @@ ${content}
     }
     
     if (fileSections.length > 0) {
+      console.log(`    ✓ Processados ${fileSections.length} arquivos com sucesso`);
       sections.push(`### ${sectionTitle}
 
 ${fileSections.join('\n\n---\n\n')}`);
+    } else {
+      console.log(`    ⚠️  Nenhum arquivo válido processado`);
     }
   }
   
+  console.log(`✅ Seções geradas: ${sections.length}`);
   return sections.join('\n\n---\n\n');
 }
 
